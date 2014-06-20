@@ -13,3 +13,7 @@
 ```grunt serve```
 
 The slides will be available at http://localhost:8000
+
+## Content
+
+Slides are in Markdown in ```slides.md```
