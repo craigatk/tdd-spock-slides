@@ -16,4 +16,4 @@ The slides will be available at http://localhost:8000
 
 ## Content
 
-Slides are in Markdown in ```slides.md```
+The presentation is based on the [Reveal.js framework](https://github.com/hakimel/reveal.js/). Slides are in Markdown in ```slides.md```
