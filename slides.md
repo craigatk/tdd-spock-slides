@@ -208,14 +208,18 @@ git fetch --all
 ---
 ## Project Structure
 
-```src/main/groovy/bank```
+```
+src/main/groovy/bank
 
-```src/test/groovy/bank```
+src/test/groovy/bank
+```
 
 ---
 ## Gradle for Running Tests
 
-```gradlew test --info```
+```
+gradlew test --info
+```
 
 ---
 ## Create First Test
@@ -468,7 +472,7 @@ Update our last test to also verify three transactions in transaction list
 ## Transaction class
 
 * Create ```Transaction``` class with ```amount``` and ```type``` fields
-* Add Groovy ```@EqualsAndHashCode``` AST transformation to ```Transaction``` class to help in testing
+* Add ```@groovy.transform.EqualsAndHashCode``` annotation to ```Transaction``` class to help in testing equality
 
 ---
 
@@ -485,7 +489,7 @@ bank.BankAccount@42652110
 
 ## @ToString
 
-Add @ToString annotation to ```Transaction``` class a more readable failure message
+Add ```@groovy.transform.ToString``` annotation to the ```Transaction``` class a more readable failure message
 
 ---
 
@@ -520,7 +524,7 @@ void withdraw(BigDecimal amount) {
 
 ## Balance calculated from transactions
 
-Create a .getBalance() method that calculates balance from transaction list.
+Create a ```.getBalance()``` method that calculates balance from transaction list.
 
 ---
 

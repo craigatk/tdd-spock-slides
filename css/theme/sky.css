@@ -44,10 +44,9 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #333333;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Open Sans", sans-serif;
   line-height: 0.9em;
   letter-spacing: -0.08em;
-  text-transform: uppercase;
   text-shadow: none; }
 
 .reveal h1 {
