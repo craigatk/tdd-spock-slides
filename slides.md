@@ -1,6 +1,13 @@
+## Agenda
+
+1. Spock Basics
+2. Introduction to Test Driven Development
+3. Coding Workshop
+
+---
 ## Spock
 
-Behavior style test framework in Groovy with support for easy data-driven testing.
+Behavior-style test framework in Groovy with support for easy data-driven testing
 
 ---
 ## Behavior-Style Testing
@@ -8,7 +15,7 @@ Behavior style test framework in Groovy with support for easy data-driven testin
 Test cases separated into three main sections
 
 * given (setup)
-* when (execute method)
+* when (execute method under test)
 * then (verify results)
 
 ---
@@ -43,8 +50,6 @@ def "after depositing 10 dollars into account then balance should be 10 dollars"
 ---
 
 ## Test case body
-
----
 
 ```
 class BankAccountSpec extends Specification {
@@ -132,49 +137,34 @@ x + y == z
 4 9 5 |  10
       false
 ```
----
-
-```
-@ToString
-class Dimensions {
-    int x
-    int y
-
-    int getArea() {
-        return x * y + 1
-    }
-}
-```
 
 ---
-
-```
-Condition not satisfied:
-
-dimensions.findArea() == 15
-|          |          |
-|          16         false
-bank.Dimensions(3, 5)
-```
-
----
-
-## Test Driven Development
+## Test Driven Development (TDD)
 
 Use tests to help guide development
 
 ---
-## TDD Benefits
 
-* Verify when we're done coding a feature
- * Avoid writing unnecessary code
-* Easily write testable code
-* Remove any need for calculating code coverage
+## TDD in a Nutshell
+
+1. Write tests
+2. Run tests, verify failure (**red**)
+3. Write only enough code to make tests pass
+4. Run tests, verify they pass (**green**)
+5. Cleanup code (**refactor**)
 
 ---
-## TDD Side Effects
+## TDD Benefits
 
-Extensive **safety net** for code changes
+* Tests tell us when we're done coding a feature
+* Avoid writing untested & unnecessary code
+* Easily write testable code
+* Remove any need for worrying about code coverage
+
+---
+## Safety Net
+
+**Extensive test suite** that serves as a **safety net** for code changes
 
 * Last-minute requirement changes
 * Performance improvements
@@ -186,7 +176,7 @@ Extensive **safety net** for code changes
 Thoroughly document expected behavior in tests
 
 ---
-## TDD Workshop
+## Workshop
 ```BankAccount``` class
 
 * balance
@@ -226,6 +216,8 @@ gradlew test --info
 
 ```BankAccountSpec``` with one test that creates a new ```BankAccount``` and verifies ```bankAccount.balance``` is 0
 
+* Hint: 'balance' should be BigDecimal type
+
 ---
     
 ```
@@ -253,8 +245,6 @@ Hint: Should be a test compilation failure because BankAccount class does not ex
 
 Write minimal code to make test pass
 
-* hint: 'balance' should be BigDecimal type
-
 ---
 
 ```
@@ -269,7 +259,7 @@ class BankAccount {
 ---
 ## Write Test for "deposit" Method
 
-Takes one parameter, a BigDecimal 'amount' and updates the balance
+Takes one parameter, a BigDecimal 'amount' and should increase the balance
 
 ---
 
@@ -304,7 +294,7 @@ void deposit(BigDecimal amount) {
 ---
 ## Additional Test Case
 
-Using ```where``` block, write an additional test case for the ```deposit()``` method that deposits a different amount.
+Using a ```where:``` block, expand our test case to different cases that deposit 10 then 20 dollars
 
 ---
 
@@ -347,7 +337,7 @@ void deposit(BigDecimal amount) {
 
 ## Withdraw method
 
-Write a test case for ```withdraw(BigDemicmal amount)``` method
+Write a test case a ```withdraw(BigDecimal amount)``` method that reduces the balance by the given amount
 
 ---
 
@@ -426,12 +416,17 @@ def "withdrawing #amount should reduce balance to #expectedBalance"() {
 
 ## Verify Deposits and Withdrawals
 
-Write additional test case that deposits 50 dollars, then withdraws 20, deposits 10, then verifies balance is 40.
+Write additional test case that 
+
+1. deposits 50 dollars
+2. withdraws 20 dollars
+3. deposits 10 dollars
+4. verifies balance is 40 dollars
 
 ---
 
 ```
-def "withdrawing and depositing should update balance and create transaction list"() {
+def "withdrawing and depositing should update balance"() {
     given:
     BankAccount bankAccount = new BankAccount()
 
@@ -465,46 +460,47 @@ Update our last test to also verify three transactions in transaction list
 
 ---
 
+```
+def "withdrawing and depositing should update balance and create transaction list"() {
+    given:
+    BankAccount bankAccount = new BankAccount()
+
+    when:
+    bankAccount.deposit(50)
+    bankAccount.withdraw(20)
+    bankAccount.deposit(10)
+
+    then:
+    assert bankAccount.balance == 40
+
+    and:
+    assert bankAccount.transactions.contains(new Transaction(amount: 50, type: 'd'))
+    assert bankAccount.transactions.contains(new Transaction(amount: 20, type: 'w'))
+    assert bankAccount.transactions.contains(new Transaction(amount: 10, type: 'd'))
+}
+```
+
+---
+
 ## Run test, verify failure
-
----
-
-## Transaction class
-
-* Create ```Transaction``` class with ```amount``` and ```type``` fields
-* Add ```@groovy.transform.EqualsAndHashCode``` annotation to ```Transaction``` class to help in testing equality
-
----
-
-## Assertion failure message
-
-```
-bankAccount.transactions.contains(new Transaction(amount: 50, type: 'd'))
-|           |            |        |
-|           []           false    bank.Transaction@298d5
-bank.BankAccount@42652110
-```
-
----
-
-## @ToString
-
-Add ```@groovy.transform.ToString``` annotation to the ```Transaction``` class a more readable failure message
-
----
-
-```
-bankAccount.transactions.contains(new Transaction(amount: 50, type: 'd'))
-|           |            |        |
-|           []           false    bank.Transaction(50, d)
-bank.BankAccount@121321f5
-```
 
 ---
 
 ## Write code to make test pass
 
-Hint: create a ```Transaction``` class with ```BigDecimal amount``` and ```String type``` fields
+* Create ```Transaction``` class with ```amount``` and ```type``` fields
+* Add ```@groovy.transform.EqualsAndHashCode``` annotation to ```Transaction``` class to help in testing equality
+* Update ```deposit()``` and ```withdraw()``` methods to add a transaction record
+
+---
+
+```
+@EqualsAndHashCode
+class Transaction {
+    BigDecimal amount
+    String type
+}
+```
 
 ---
 
@@ -552,10 +548,20 @@ BigDecimal getBalance() {
 
 ## Recap
 
-* BDD-style testing with Spock
-* Groovy power assert
+* Groovy testing with Spock
+* Advantages of TDD
 * Test-drive Groovy bank account
 
 ---
 
 ## Q & A
+
+---
+
+## Thanks for attending!
+
+Contact info
+
+craig.atkinson@objectpartners.com
+
+@craigatk1
