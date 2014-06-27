@@ -74,6 +74,30 @@ class BankAccountSpec extends Specification {
   }
 }
 ```
+
+---
+## Setup Method
+
+Run code before each test method
+
+```
+def setup() {
+  // Setup code goes here
+}
+```
+
+---
+
+## Cleanup Method
+
+Run code after each test method
+
+```
+def cleanup() {
+  // Cleanup code goes here
+}
+```
+
 ---
 
 ## Data-Driven Testing
@@ -187,6 +211,7 @@ Use tests to help guide development
 * Last-minute requirement changes
 * Performance improvements
 * Code cleanup
+* Upgrade libraries and frameworks
 
 ---
 ## Executable Documentation
@@ -310,7 +335,7 @@ void deposit(BigDecimal amount) {
 ---
 ## Additional Test Case
 
-Using a ```where:``` block, expand our test case to different cases that deposit 10 then 20 dollars
+Using a ```where:``` block, expand our test method to two cases, one that deposits 10 dollars and one that deposits 20 dollars
 
 ---
 
@@ -569,7 +594,7 @@ BigDecimal getBalance() {
 ## Recap
 
 * Groovy testing with Spock
-* Advantages of TDD
+* Benefits of TDD
 * Test-drive Groovy bank account
 
 ---
