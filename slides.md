@@ -9,6 +9,9 @@
 
 Behavior-style test framework in Groovy with support for easy data-driven testing
 
+Note:
+Even though Spock tests are written in Groovy, you can test code written in Java or other JVM languages with Spock.
+
 ---
 ## Behavior-Style Testing
 
@@ -56,10 +59,10 @@ class BankAccountSpec extends Specification {
   def "after depositing 10 dollars into account then balance should be 10 dollars"() {
     given:
     BankAccount bankAccount = new BankAccount()
-      
+
     when:
     bankAccount.deposit(10)
-      
+
     then:
     assert bankAccount.balance == 10
   }
@@ -92,13 +95,13 @@ Include inputs and outputs from ```where:``` block in tests results
 def 'depositing #amount should increase balance to #expectedBalance'() {
   given:
   BankAccount bankAccount = new BankAccount()
-  
+
   when:
   bankAccount.deposit(amount)
-  
+
   then:
   assert bankAccount.balance == expectedBalance
-  
+
   where:
   amount || expectedBalance
   10     || 10
@@ -219,16 +222,16 @@ gradlew test --info
 * Hint: 'balance' should be BigDecimal type
 
 ---
-    
+
 ```
 class BankAccountSpec extends Specification {
   def "bank account starting balance should be 0"() {
     given:
     BankAccount bankAccount = new BankAccount()
-    
+
     when:
     BigDecimal startingBalance = bankAccount.balance
-    
+
     then:
     assert startingBalance == 0
   }
@@ -240,7 +243,7 @@ class BankAccountSpec extends Specification {
 
 Hint: Should be a test compilation failure because BankAccount class does not exist yet
 
----    
+---
 ## Make Test Pass
 
 Write minimal code to make test pass
@@ -249,7 +252,7 @@ Write minimal code to make test pass
 
 ```
 class BankAccount {
-  BigDecimal balance = 0      
+  BigDecimal balance = 0
 }
 ```
 
@@ -267,10 +270,10 @@ Takes one parameter, a BigDecimal 'amount' and should increase the balance
 def 'deposit should increase balance'() {
   given:
   BankAccount bankAccount = new BankAccount()
-  
+
   when:
   bankAccount.deposit(10)
-  
+
   then:
   assert bankAccount.balance == 10
 }
@@ -303,13 +306,13 @@ Using a ```where:``` block, expand our test case to different cases that deposit
 def 'depositing #amount should increase balance to #expectedBalance'() {
   given:
   BankAccount bankAccount = new BankAccount()
-  
+
   when:
   bankAccount.deposit(amount)
-  
+
   then:
   assert bankAccount.balance == expectedBalance
-  
+
   where:
   amount || expectedBalance
   10     || 10
@@ -345,12 +348,12 @@ Write a test case a ```withdraw(BigDecimal amount)``` method that reduces the ba
 def "withdraw should reduce balance"() {
   given:
   BankAccount bankAccount = new BankAccount()
-  
+
   bankAccount.deposit(20)
-  
+
   when:
   bankAccount.withdraw(15)
-  
+
   then:
   assert bankAccount.balance == 5
 }
@@ -391,15 +394,15 @@ Similar to ```deposit()``` method, use ```where:``` block to add two additional 
 def "withdrawing #amount should reduce balance to #expectedBalance"() {
   given:
   BankAccount bankAccount = new BankAccount()
-  
+
   bankAccount.deposit(20)
-  
+
   when:
   bankAccount.withdraw(amount)
-  
+
   then:
   assert bankAccount.balance == expectedBalance
-  
+
   where:
   amount || expectedBalance
   5      || 15
@@ -416,7 +419,7 @@ def "withdrawing #amount should reduce balance to #expectedBalance"() {
 
 ## Verify Deposits and Withdrawals
 
-Write additional test case that 
+Write additional test case that
 
 1. deposits 50 dollars
 2. withdraws 20 dollars
@@ -486,14 +489,12 @@ def "withdrawing and depositing should update balance and create transaction lis
 
 ---
 
-## Write code to make test pass
+## Add ```Transaction``` class
 
 * Create ```Transaction``` class with ```amount``` and ```type``` fields
 * Add ```@groovy.transform.EqualsAndHashCode``` annotation to ```Transaction``` class to help in testing equality
-* Update ```deposit()``` and ```withdraw()``` methods to add a transaction record
 
 ---
-
 ```
 @EqualsAndHashCode
 class Transaction {
@@ -501,6 +502,13 @@ class Transaction {
     String type
 }
 ```
+
+---
+
+
+## Update existing methods
+
+Update ```deposit()``` and ```withdraw()``` methods to add a ```Transaction```  to a list of Transactions
 
 ---
 
@@ -518,7 +526,7 @@ void withdraw(BigDecimal amount) {
 
 ---
 
-## Balance calculated from transactions
+## Calculate balance from transactions
 
 Create a ```.getBalance()``` method that calculates balance from transaction list.
 
