@@ -295,12 +295,10 @@ def 'deposit should increase balance'() {
 ```
 
 ---
-## Run test, verify failure
+## Red, Green
 
----
-
-## Write minimal code to make test pass
-
+* Run test, verify failure
+* Write the minimal code to make the test pass
 ---
 
 ```
@@ -337,11 +335,10 @@ def 'depositing #amount should increase balance to #expectedBalance'() {
 
 ---
 
-## Run tests, verify failure
+## Red, Green
 
----
-
-## Write full deposit method
+* Run tests, verify failure
+* Write full deposit method
 
 ---
 
@@ -355,7 +352,9 @@ void deposit(BigDecimal amount) {
 
 ## Withdraw method
 
-Write a test case a ```withdraw(BigDecimal amount)``` method that reduces the balance by the given amount
+Write a test case for a ```withdraw(BigDecimal amount)``` method that reduces the balance by the given amount
+
+Hint: In the test setup, create a new BankAccount() and deposit money into it.
 
 ---
 
@@ -376,13 +375,10 @@ def "withdraw should reduce balance"() {
 
 ---
 
-## Run test, verify failure
+## Red, Green
 
----
-
-## Make test pass
-
-Write minimal code to make test pass
+* Run test, verify failure
+* Write the minimal code to make the test pass
 
 ---
 
@@ -391,10 +387,6 @@ void withdraw(BigDecimal amount) {
   balance = 5
 }
 ```
-
----
-
-## Run test, verify pass
 
 ---
 
