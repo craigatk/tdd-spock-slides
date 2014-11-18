@@ -26,6 +26,9 @@ Test cases separated into three main sections
 
 Run **same test body** with **multiple sets** of test **inputs** and expected **outputs**
 
+Note:
+Spock's simple syntax for data-driven tests is one of it's main wins.
+
 ---
 ## Writing a Spock test
 
@@ -50,6 +53,9 @@ def "after depositing 10 dollars into account then balance should be 10 dollars"
 }
 ```
 
+Note:
+These long sentence test names are more useful to future readers of the 
+code than previous names such as 'depositTestCase1' as they illustrate the full intent of the test.
 ---
 
 ## Test case body
@@ -109,12 +115,18 @@ def 'depositing #amount should increase balance to #expectedBalance'() {
 }
 ```
 
+Note:
+The test body is executed once for each row in the 'where' block. Single pipes are used to separate test input variables and the double-pipe is a convention (though not required) to separate the test input section from the test output variables.
+
 ---
 ## Groovy Power Assert
 
 ```
 assert result == expectedValue
 ```
+
+Note:
+The Groovy Power assert prints out a very descriptive and useful failure message when an assertion fails.
 
 ---
 
@@ -140,6 +152,9 @@ x + y == z
 4 9 5 |  10
       false
 ```
+
+Note:
+The power assert prints out the result of calling the .toString() method on each item in the assert statement.
 
 ---
 ## Test Driven Development (TDD)
@@ -460,6 +475,11 @@ def "withdrawing and depositing should update balance"() {
 ## Start with tests
 
 Update our last test to also verify three transactions in transaction list
+
+Hint:
+```
+assert bankAccount.transactions.contains(new Transaction(amount: 50, type: 'd'))
+```
 
 ---
 
