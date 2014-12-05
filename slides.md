@@ -199,7 +199,7 @@ Use tests to help guide development
 ## TDD Benefits
 
 * Tests tell us when we're done coding a feature
-* Avoid writing untested & unnecessary code
+* Avoid writing unnecessary or untested code
 * Easily write testable code
 * Remove any need for worrying about code coverage
 
@@ -225,7 +225,6 @@ Thoroughly document expected behavior in tests
 * balance
 * deposit
 * withdraw
-* surprise feature
 
 ---
 ## Fetch Project
@@ -474,120 +473,6 @@ def "withdrawing and depositing should update balance"() {
     assert bankAccount.balance == 40
 }
 ```
-
----
-
-## Surprise Feature
-
----
-
-## Transaction History
-
-* Keep a list of all transactions
-* Record transaction type and amount
-    * ```List<Transaction> transactions```
-    * ```'d'``` for deposit, ```'w'``` for withdrawal
----
-
-## Start with tests
-
-Update our last test to also verify three transactions in transaction list
-
-Hint:
-```
-assert bankAccount.transactions.contains(new Transaction(amount: 50, type: 'd'))
-```
-
----
-
-```
-def "withdrawing and depositing should update balance and create transaction list"() {
-    given:
-    BankAccount bankAccount = new BankAccount()
-
-    when:
-    bankAccount.deposit(50)
-    bankAccount.withdraw(20)
-    bankAccount.deposit(10)
-
-    then:
-    assert bankAccount.balance == 40
-
-    and:
-    assert bankAccount.transactions.contains(new Transaction(amount: 50, type: 'd'))
-    assert bankAccount.transactions.contains(new Transaction(amount: 20, type: 'w'))
-    assert bankAccount.transactions.contains(new Transaction(amount: 10, type: 'd'))
-}
-```
-
----
-
-## Run test, verify failure
-
----
-
-## Add ```Transaction``` class
-
-* Create ```Transaction``` class with ```amount``` and ```type``` fields
-* Add ```@groovy.transform.EqualsAndHashCode``` annotation to ```Transaction``` class to help in testing equality
-
----
-```
-@EqualsAndHashCode
-class Transaction {
-    BigDecimal amount
-    String type
-}
-```
-
----
-
-
-## Update existing methods
-
-Update ```deposit()``` and ```withdraw()``` methods to add a ```Transaction```  to a list of Transactions
-
----
-
-```
-List<Transaction> transactions = []
-
-void deposit(BigDecimal amount) {
-    transactions << new Transaction(type: 'd', amount: amount)
-}
-
-void withdraw(BigDecimal amount) {
-    transactions << new Transaction(type: 'w', amount: amount)
-}
-```
-
----
-
-## Calculate balance from transactions
-
-Create a ```.getBalance()``` method that calculates balance from transaction list.
-
----
-
-```
-BigDecimal getBalance() {
-    if (transactions) {
-        return transactions.sum { transaction ->
-            if (transaction.type == 'd') {
-                transaction.amount
-            } else {
-                -transaction.amount
-            }
-        }
-    } else {
-        return 0
-    }
-}
-```
-
----
-
-## Run all tests, verify they pass
 
 ---
 
