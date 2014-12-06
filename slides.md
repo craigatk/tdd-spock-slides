@@ -282,6 +282,10 @@ class BankAccountSpec extends Specification {
 
 Hint: Should be a test compilation failure because BankAccount class does not exist yet
 
+```
+gradlew test --info
+```
+
 ---
 ## Make Test Pass
 
@@ -448,31 +452,7 @@ def "withdrawing #amount should reduce balance to #expectedBalance"() {
 
 ---
 
-## Verify Deposits and Withdrawals
-
-Write additional test case that
-
-1. deposits 50 dollars
-2. withdraws 20 dollars
-3. deposits 10 dollars
-4. verifies balance is 40 dollars
-
----
-
-```
-def "withdrawing and depositing should update balance"() {
-    given:
-    BankAccount bankAccount = new BankAccount()
-
-    when:
-    bankAccount.deposit(50)
-    bankAccount.withdraw(20)
-    bankAccount.deposit(10)
-
-    then:
-    assert bankAccount.balance == 40
-}
-```
+## We TDD'ed a BankAccount!
 
 ---
 
