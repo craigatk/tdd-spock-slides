@@ -239,9 +239,9 @@ cd tdd-spock
 ## Project Structure
 
 ```
-src/main/groovy/bank
+src/main/groovy
 
-src/test/groovy/bank
+src/test/groovy
 ```
 
 ---
