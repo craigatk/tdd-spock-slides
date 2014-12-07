@@ -48,7 +48,7 @@ class BankAccountSpec extends Specification {
 Test case method names can be descriptive sentences
 
 ```
-def "after depositing 10 dollars into account then balance should be 10 dollars"() {
+def "after depositing 10 dollars then balance should be 10 dollars"() {
 
 }
 ```
@@ -62,7 +62,7 @@ code than previous names such as 'depositTestCase1' as they illustrate the full 
 
 ```
 class BankAccountSpec extends Specification {
-  def "after depositing 10 dollars into account then balance should be 10 dollars"() {
+  def "after depositing 10 dollars then balance should be 10 dollars"() {
     given:
     BankAccount bankAccount = new BankAccount()
 
@@ -230,11 +230,9 @@ Thoroughly document expected behavior in tests
 ## Fetch Project
 
 ```
-git clone git@github.com:craigatk/tdd-spock.git
+git clone https://github.com/craigatk/tdd-spock.git
 
 cd tdd-spock
-
-git fetch --all
 ```
 
 ---
@@ -443,6 +441,14 @@ def "withdrawing #amount should reduce balance to #expectedBalance"() {
   5      || 15
   10     || 10
   15     || 5
+}
+```
+
+---
+
+```
+void withdraw(BigDecimal amount) {
+  balance -= amount
 }
 ```
 
